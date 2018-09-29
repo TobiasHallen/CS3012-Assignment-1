@@ -1,3 +1,3 @@
 # CS3012 Assignment 1
 
-Provide a Solution to the Common Ancestor Problem
+Providing a Solution to the Lowest Common Ancestor Problem
