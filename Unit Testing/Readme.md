@@ -23,3 +23,5 @@ Tests are comprised of sets of nodes, with an expected result, e.g.
 | 39     | 27     | 27                   |
 | 27     | 27     | 27                   |
 | 45     | 45     | 45                   |
+
+[[https://github.com/TobiasHallen/CS3012-Assignment-1/blob/master/Unit%20Testing/Binary%20Search%20Tree.PNG]]
