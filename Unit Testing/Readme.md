@@ -3,13 +3,8 @@
 The binary search tree which serves as an example and is used in the unit tests looks as follows:
 
 
-				            45
-					  /    \
-					27      68
-	            		      /   \
-				    18	   35	
-	                                  /   \
-					29     39
+![Image of BST](https://github.com/TobiasHallen/CS3012-Assignment-1/blob/master/Unit%20Testing/Binary%20Search%20Tree.PNG)
+
 				
 				
 Tests are comprised of sets of nodes, with an expected result, e.g.
@@ -24,4 +19,3 @@ Tests are comprised of sets of nodes, with an expected result, e.g.
 | 27     | 27     | 27                   |
 | 45     | 45     | 45                   |
 
-![Image of BST](https://github.com/TobiasHallen/CS3012-Assignment-1/blob/master/Unit%20Testing/Binary%20Search%20Tree.PNG)
