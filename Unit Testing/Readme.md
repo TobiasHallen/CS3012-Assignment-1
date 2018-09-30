@@ -3,13 +3,13 @@
 The binary search tree which serves as an example and is used in the unit tests looks as follows:
 
 
-						45
+				            45
 					  /    \
-					27		68
-	              /   \
-				 18	   35	
-	                  /   \
-					 29	   39
+					27      68
+	            		      /   \
+				    18	   35	
+	                                  /   \
+					29     39
 				
 				
 Tests are comprised of sets of nodes, with an expected result, e.g.
