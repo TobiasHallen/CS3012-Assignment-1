@@ -41,6 +41,9 @@ public class BinaryTreeTest
 		assertEquals("Testing for 27 and 27", 27, tree.LCA(tree.get(tree.root, 27), tree.get(tree.root, 27)).key);
 
 		assertEquals("Testing for 45 and 45", 45, tree.LCA(tree.get(tree.root, 45), tree.get(tree.root, 45)).key);
+		
+		assertEquals("Testing for null input", null, tree.LCA(null, null));
+		
 
 		
 	}
