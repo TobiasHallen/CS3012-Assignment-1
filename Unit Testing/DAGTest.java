@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class BinaryTreeTest 
+public class DAGTest 
 {
 	
 	//	Tree Used for the purposes of Unit Testing looks like this:
@@ -22,7 +22,7 @@ public class BinaryTreeTest
 	@Test
 	public void test() 
 	{
-        BinaryTree tree = new BinaryTree(); 
+        DAG tree = new DAG(); 
         tree.root = tree.insert(tree.root, 45); 
         tree.root = tree.insert(tree.root, 27); 
         tree.root = tree.insert(tree.root, 68); 
