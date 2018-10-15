@@ -38,7 +38,14 @@ class DAG
 			adjList.add(x);
 			if(adjList.contains(y))
 			{
-				adjList.get(y).parents.add(adjList.get(x));
+				for(int i=0;i<adjList.size())
+				{
+					Node n = adjList.get(i);
+					if(n==y)
+					{
+						adjList.get(i).parents.add(adjList.get(x));
+					}
+				}
 			}
 			else
 			{
