@@ -38,7 +38,7 @@ class DAG
 			adjList.add(x);
 			if(adjList.contains(y))
 			{
-				for(int i=0;i<adjList.size())
+				for(int i=0;i<adjList.size();i++)
 				{
 					Node n = adjList.get(i);
 					if(n==y)
@@ -106,12 +106,12 @@ class DAG
 	}
 } 
 
-class Node  
+class BSTNode  
 { 
     int key; 
-    public Node left, right, parent; 
+    public BSTNode left, right, parent; 
   
-    Node(int key)  
+    BSTNode(int key)  
     { 
         this.key = key; 
         left = right = parent = null; 
@@ -120,12 +120,12 @@ class Node
   
 class BinaryTree  
 { 
-    Node root;
+    BSTNode root;
   
-    public Node insert(Node x, int key)  
+    public BSTNode insert(BSTNode x, int key)  
     { 
         if (x == null) 
-            return new Node(key); 
+            return new BSTNode(key); 
   
         if (key < x.key)  
         { 
@@ -142,7 +142,7 @@ class BinaryTree
     } 
     
     
-    public Node get(Node x, int key) 
+    public BSTNode get(BSTNode x, int key) 
     {
 		if (x == null) return null;
 		if(x.left==null)return x;
@@ -154,9 +154,9 @@ class BinaryTree
 		}
 	}
   
-    public Node LCA(Node x, Node y)  
+    public BSTNode LCA(BSTNode x, BSTNode y)  
     { 
-        Map<Node, Boolean> ancestors = new HashMap<Node, Boolean>(); 
+        Map<BSTNode, Boolean> ancestors = new HashMap<BSTNode, Boolean>(); 
   
         while (x != null)  
         { 
