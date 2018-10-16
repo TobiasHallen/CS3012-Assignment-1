@@ -1,130 +1,175 @@
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
-
-
-class Node  
-{ 
-	private int v; 
-    private int weight; 
-    public String colour = "white";
-    Node(int _v, int _w) { v = _v;  weight = _w; } 
-    int getV() { return v; } 
-    int getWeight()  { return weight; } 
-} 
 
 class DAG  
 { 
-	private int V; 
-    private LinkedList<Node>adj[]; 
-    @SuppressWarnings("unchecked")
-	DAG(int v) 
-    { 
-        V=v; 
-        adj = new LinkedList[V]; 
-        for (int i=0; i<v; ++i) 
-        {    
-        	adj[i] = new LinkedList<Node>(); 
-        }	
-    } 
-    void addEdge(int u, int v, int weight) 
-    { 
-    	Node node = new Node(v,weight); 
-        adj[u].add(node);
-    	//System.out.println(adj[u].get(0).getV());
+	Node[] globalNodes;
+	Node root;
+	class Node
+	{
+		public int count;
+		public String colour = "White";
+		public final String name;
+		public final HashSet<Edge> inEdges;
+		public final HashSet<Edge> outEdges;
+		public Node(String name) {
+			this.name = name;
+			inEdges = new HashSet<Edge>();
+			outEdges = new HashSet<Edge>();
+			count=0;
+		}
+		public Node addEdge(Node node)
+		{
+			Edge e = new Edge(this, node);
+			outEdges.add(e);
+			node.inEdges.add(e);
+			return this;
+		}
+		@Override
+		public String toString() 
+		{
+			return name;
+		}
+	}
 
-    } 
-    String printGraph()
-    {
-    	StringBuilder sb = new StringBuilder();
-    	for(int i=0;i<adj.length;i++)
-    	{
-    		for(int j=0; j<adj[i].size();j++)
-    		{
-    			sb.append(adj[i].get(j).getV()+":");
-        		sb.append(adj[i].get(j).getWeight()+"  ");
-    		}
-    		sb.append("    ");
-    	}
-    	System.out.println(sb.toString());
-    	return sb.toString();
-    }
+	class Edge
+	{
+		public final Node from;
+		public final Node to;
+		public Edge(Node from, Node to) 
+		{
+			this.from = from;
+			this.to = to;
+		}
+		@Override
+		public boolean equals(Object obj) 
+		{
+			Edge e = (Edge)obj;
+			return e.from == from && e.to == to;
+		}
+	}
 
+	public Node LCA(String X, String Y)
+	{
+		Node n = null;
+		Node m = null;
+		for(int i=0;i<globalNodes.length;i++)
+		{
+			if(globalNodes[i].name==X)
+				n=globalNodes[i];
+			
+			if(globalNodes[i].name==Y)
+				m=globalNodes[i];
+		}
+		blue(n);
+		red(m);
+		
+		for(int i=0;i<globalNodes.length;i++)
+		{
+			if(globalNodes[i].colour=="Red")
+			{
+					for(Edge x : globalNodes[i].inEdges)
+					{
+						x.from.count++;
+					}
+			}
+		}
+		for(int i=0;i<globalNodes.length;i++)
+		{
+			if(globalNodes[i].count==0&&globalNodes[i].colour=="Red")System.out.println("LCA = "+globalNodes[i].name);
+		}
+		return globalNodes[1];
+	}
 
-//	public void BFSLCA(Node x, Node y)
-//	{
-//		Node node;
-//		for(int j=0;j<2;j++)
-//		{
-//			if(j==0)node=x;
-//			else node = y;
-//			ArrayList<Node> visited = new ArrayList<Node>();
-//			LinkedList<Node> queue = new LinkedList<Node>();
-//			queue.add(node);
-//			while(queue.size()!=0){
-//				node = queue.poll();
-//				System.out.println(node.key);
-//				for(int i=0;i<node.adj.size();i++)
-//				{
-//					Node n = node.adj.get(i);
-//					if(!visited.contains(n))
-//					{
-//						visited.add(n);
-//						queue.add(n);
-//						if(j==0)node.colour="Blue";
-//						else if(node.colour=="Blue")node.colour="Red";
-//						if(node.colour=="Red")
-//						{
-//							
-//						}
-//					}
-//				}
-//
-//			}
-//
-//		}
-//	}
+	public void blue(Node n)
+	{
+		for(Edge x : n.inEdges)
+		{
+			x.from.colour="Blue";
+			blue(x.from);
+		}
+	}
+
+	public void red(Node n)
+	{
+		for(Edge x : n.inEdges)
+		{
+			if(x.from.colour=="Blue")
+				x.from.colour="Red";
+			red(x.from);
+		}
+	}
+
+	public void createGraph()
+	{
+		Node zero = new Node("0");
+		Node one = new Node("1");
+		Node two = new Node("2");
+		Node three = new Node("3");
+		Node four = new Node("4");
+		Node five = new Node("5");
+		zero.addEdge(two).addEdge(one);
+		one.addEdge(four).addEdge(five);
+		two.addEdge(three).addEdge(five);
+		three.addEdge(four);
+
+		Node[] allNodes = {one, two, three, four, five};
+		globalNodes = allNodes;
+
+		HashSet<Node> S = new HashSet<Node>(); 
+		for(Node n : allNodes){
+			if(n.inEdges.size() == 0){
+				S.add(n);
+				root=n;
+			}
+		}
+	}
+
 } 
 
 class BSTNode  
 { 
-    int key; 
-    public BSTNode left, right, parent; 
-  
-    BSTNode(int key)  
-    { 
-        this.key = key; 
-        left = right = parent = null; 
-    } 
+	int key; 
+	public BSTNode left, right, parent; 
+
+	BSTNode(int key)  
+	{ 
+		this.key = key; 
+		left = right = parent = null; 
+	} 
 } 
-  
+
 class BinaryTree  
 { 
-    BSTNode root;
-  
-    public BSTNode insert(BSTNode x, int key)  
-    { 
-        if (x == null) 
-            return new BSTNode(key); 
-  
-        if (key < x.key)  
-        { 
-            x.left = insert(x.left, key); 
-            x.left.parent = x; 
-        } 
-        else if (key > x.key)  
-        { 
-            x.right = insert(x.right, key); 
-            x.right.parent = x; 
-        } 
-  
-        return x; 
-    } 
-    
-    
-    public BSTNode get(BSTNode x, int key) 
-    {
+	BSTNode root;
+
+	public BSTNode insert(BSTNode x, int key)  
+	{ 
+		if (x == null) 
+			return new BSTNode(key); 
+
+		if (key < x.key)  
+		{ 
+			x.left = insert(x.left, key); 
+			x.left.parent = x; 
+		} 
+		else if (key > x.key)  
+		{ 
+			x.right = insert(x.right, key); 
+			x.right.parent = x; 
+		} 
+
+		return x; 
+	} 
+
+
+	public BSTNode get(BSTNode x, int key) 
+	{
 		if (x == null) return null;
 		if(x.left==null)return x;
 		if      (key < x.key) return get(x.left, key);
@@ -134,27 +179,27 @@ class BinaryTree
 			return x;
 		}
 	}
-  
-    public BSTNode LCA(BSTNode x, BSTNode y)  
-    { 
-        Map<BSTNode, Boolean> ancestors = new HashMap<BSTNode, Boolean>(); 
-  
-        while (x != null)  
-        { 
-            ancestors.put(x, Boolean.TRUE); 
-            x = x.parent; 
-        } 
-        
-        while (y != null)  
-        { 
-            if (ancestors.containsKey(y) != ancestors.isEmpty()) 
-                return y; 
-            y = y.parent; 
-        } 
-  
-        return null; 
-    } 
+
+	public BSTNode LCA(BSTNode x, BSTNode y)  
+	{ 
+		Map<BSTNode, Boolean> ancestors = new HashMap<BSTNode, Boolean>(); 
+
+		while (x != null)  
+		{ 
+			ancestors.put(x, Boolean.TRUE); 
+			x = x.parent; 
+		} 
+
+		while (y != null)  
+		{ 
+			if (ancestors.containsKey(y) != ancestors.isEmpty()) 
+				return y; 
+			y = y.parent; 
+		} 
+
+		return null; 
+	} 
 
 
-  
+
 } 

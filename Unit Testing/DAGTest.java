@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+
 @RunWith(JUnit4.class)
 public class DAGTest 
 {
@@ -55,19 +56,12 @@ public class DAGTest
 	@Test
 	public void testDAG()
 	{
-		DAG d = new DAG(6);
-        d.addEdge(0, 1, 5); 
-        d.addEdge(0, 2, 3); 
-        d.addEdge(1, 3, 6); 
-        d.addEdge(1, 2, 2); 
-        d.addEdge(2, 4, 4); 
-        d.addEdge(2, 5, 2); 
-        d.addEdge(2, 3, 7); 
-        d.addEdge(3, 4, -1); 
-        d.addEdge(3, 5, 1);
-        d.addEdge(4, 5, -2);
-        
-        d.printGraph();
+		DAG d = new DAG();
+		d.createGraph();
+		d.LCA("4","5");
+
 	}
+	
+
 
 }
