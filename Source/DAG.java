@@ -2,108 +2,89 @@
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.ArrayList;
 
 
 class Node  
 { 
-	int key; 
-	public ArrayList<Node> children = new ArrayList<Node>();
-	public ArrayList<Node> parents = new ArrayList<Node>();
-	public String colour = "white";
-	public int count=0;
-	public ArrayList<Node> adj = new ArrayList<Node>();
-	Node(int key)  
-	{ 
-		this.key = key; 
-		parents.add(null);
-		children.add(null);
-	} 
+	private int v; 
+    private int weight; 
+    public String colour = "white";
+    Node(int _v, int _w) { v = _v;  weight = _w; } 
+    int getV() { return v; } 
+    int getWeight()  { return weight; } 
 } 
 
 class DAG  
 { 
-	Node root;
-	public ArrayList<Node> adjList = new ArrayList<Node>;
+	private int V; 
+    private LinkedList<Node>adj[]; 
+    @SuppressWarnings("unchecked")
+	DAG(int v) 
+    { 
+        V=v; 
+        adj = new LinkedList[V]; 
+        for (int i=0; i<v; ++i) 
+        {    
+        	adj[i] = new LinkedList<Node>(); 
+        }	
+    } 
+    void addEdge(int u, int v, int weight) 
+    { 
+    	Node node = new Node(v,weight); 
+        adj[u].add(node);
+    	//System.out.println(adj[u].get(0).getV());
 
-	public Node insert(Node x, Node y)  
-	{ 
-		if (root == null) 
-		{
-			root=x; 
-			adjList.add(x);
-		}
-		if(!adjList.contains(x))
-		{
-			adjList.add(x);
-			if(adjList.contains(y))
-			{
-				for(int i=0;i<adjList.size();i++)
-				{
-					Node n = adjList.get(i);
-					if(n==y)
-					{
-						adjList.get(i).parents.add(adjList.get(x));
-					}
-				}
-			}
-			else
-			{
-				adjList.add(y);
-				adjList.get(x).children.add(adjList.get(y));
-				adjList.get(y).parents.add(adjList.get(x));
-			}
-		}
-		else
-		{
-			if(adjList.contains(y))
-			{
-				adjList.get(y).parents.add(adjList.get(x));
-			}
-			else
-			{
-				adjList.add(y);
-				adjList.get(x).children.add(adjList.get(y));
-				adjList.get(y).parents.add(adjList.get(x));
-			}
-		}
-		return x; 
-	} 
+    } 
+    String printGraph()
+    {
+    	StringBuilder sb = new StringBuilder();
+    	for(int i=0;i<adj.length;i++)
+    	{
+    		for(int j=0; j<adj[i].size();j++)
+    		{
+    			sb.append(adj[i].get(j).getV()+":");
+        		sb.append(adj[i].get(j).getWeight()+"  ");
+    		}
+    		sb.append("    ");
+    	}
+    	System.out.println(sb.toString());
+    	return sb.toString();
+    }
 
 
-	public void BFSLCA(Node x, Node y)
-	{
-		Node node;
-		for(int j=0;j<2;j++)
-		{
-			if(j==0)node=x;
-			else node = y;
-			ArrayList<Node> visited = new ArrayList<Node>();
-			LinkedList<Node> queue = new LinkedList<Node>();
-			queue.add(node);
-			while(queue.size()!=0){
-				node = queue.poll();
-				System.out.println(node.key);
-				for(int i=0;i<node.adj.size();i++)
-				{
-					Node n = node.adj.get(i);
-					if(!visited.contains(n))
-					{
-						visited.add(n);
-						queue.add(n);
-						if(j==0)node.colour="Blue";
-						else if(node.colour=="Blue")node.colour="Red";
-						if(node.colour=="Red")
-						{
-							
-						}
-					}
-				}
-
-			}
-
-		}
-	}
+//	public void BFSLCA(Node x, Node y)
+//	{
+//		Node node;
+//		for(int j=0;j<2;j++)
+//		{
+//			if(j==0)node=x;
+//			else node = y;
+//			ArrayList<Node> visited = new ArrayList<Node>();
+//			LinkedList<Node> queue = new LinkedList<Node>();
+//			queue.add(node);
+//			while(queue.size()!=0){
+//				node = queue.poll();
+//				System.out.println(node.key);
+//				for(int i=0;i<node.adj.size();i++)
+//				{
+//					Node n = node.adj.get(i);
+//					if(!visited.contains(n))
+//					{
+//						visited.add(n);
+//						queue.add(n);
+//						if(j==0)node.colour="Blue";
+//						else if(node.colour=="Blue")node.colour="Red";
+//						if(node.colour=="Red")
+//						{
+//							
+//						}
+//					}
+//				}
+//
+//			}
+//
+//		}
+//	}
 } 
 
 class BSTNode  
