@@ -78,7 +78,8 @@ public class DAGTest
 		assertEquals("Testing for 2 Nodes where the left is the LCA (2,3 = 2)", "[2]", d.LCA("2", "3").toString());
 		assertEquals("Testing for 2 Nodes where the right is the LCA (3,2 = 2)", "[2]", d.LCA("3", "2").toString());
 		assertEquals("Testing for 1 Node where Node is a root (0,0 = 0)", "[0]", d.LCA("0", "0").toString());
-
+		assertEquals("Testing for 2 Nodes where either are null", "[]", d.LCA(null, null).toString());
+		
 	}
 	
 

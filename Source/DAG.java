@@ -53,6 +53,8 @@ class DAG
 		Node n = null;
 		Node m = null;
 		ArrayList<Node> ret = new ArrayList<Node>();
+		if(X==null|Y==null) return ret;
+
 		for(int i=0;i<globalNodes.length;i++)
 		{
 			if(globalNodes[i].name==X){
