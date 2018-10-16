@@ -73,8 +73,11 @@ public class DAGTest
 		
 		assertEquals("Testing for 2 Nodes with single LCA (3,5 = 2)", "[2]", d.LCA("3", "5").toString());
 		assertEquals("Testing for 2 Nodes with multiple LCAs (4,5 = 1,2)", "[1, 2]", d.LCA("4", "5").toString());
-		assertEquals("Testing for 1 Nodes with itself (5,5 = 5)", "[5]", d.LCA("5", "5").toString());
+		assertEquals("Testing for 1 Node with itself (5,5 = 5)", "[5]", d.LCA("5", "5").toString());
 		assertEquals("Testing for 2 Nodes, one of which is the root (0,5 = 0)", "[0]", d.LCA("0", "5").toString());
+		assertEquals("Testing for 2 Nodes where the left is the LCA (2,3 = 2)", "[2]", d.LCA("2", "3").toString());
+		assertEquals("Testing for 2 Nodes where the right is the LCA (3,2 = 2)", "[2]", d.LCA("3", "2").toString());
+		assertEquals("Testing for 1 Node where Node is a root (0,0 = 0)", "[0]", d.LCA("0", "0").toString());
 
 	}
 	

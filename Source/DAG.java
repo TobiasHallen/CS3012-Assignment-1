@@ -46,12 +46,6 @@ class DAG
 			this.from = from;
 			this.to = to;
 		}
-		@Override
-		public boolean equals(Object obj) 
-		{
-			Edge e = (Edge)obj;
-			return e.from == from && e.to == to;
-		}
 	}
 
 	public ArrayList<Node> LCA(String X, String Y)
