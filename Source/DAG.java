@@ -9,7 +9,7 @@ import java.util.Map;
 class DAG  
 { 
 	Node[] globalNodes;
-	Node root;
+	HashSet<Node> S = new HashSet<Node>(); 
 	class Node
 	{
 		public int count;
@@ -54,40 +54,66 @@ class DAG
 		}
 	}
 
-	public Node LCA(String X, String Y)
+	public ArrayList<Node> LCA(String X, String Y)
 	{
 		Node n = null;
 		Node m = null;
+		ArrayList<Node> ret = new ArrayList<Node>();
 		for(int i=0;i<globalNodes.length;i++)
 		{
-			if(globalNodes[i].name==X)
+			if(globalNodes[i].name==X){
 				n=globalNodes[i];
-			
-			if(globalNodes[i].name==Y)
+			}
+			if(globalNodes[i].name==Y){
 				m=globalNodes[i];
+			}
 		}
+		if(!n.inEdges.isEmpty())
+			for( Edge x : n.inEdges)
+			{
+				if(x.from.equals(m))
+				{
+					ret.add(m);
+					return ret;
+				}
+			}
+		if(!n.outEdges.isEmpty())
+			for( Edge x : n.outEdges)
+			{
+				if(x.to.equals(m))
+				{
+					ret.add(n);
+					return ret;
+				}
+			}
 		blue(n);
 		red(m);
-		
+
 		for(int i=0;i<globalNodes.length;i++)
 		{
 			if(globalNodes[i].colour=="Red")
 			{
-					for(Edge x : globalNodes[i].inEdges)
-					{
-						x.from.count++;
-					}
+				for(Edge x : globalNodes[i].inEdges)
+				{
+					x.from.count++;
+				}
 			}
 		}
 		for(int i=0;i<globalNodes.length;i++)
 		{
-			if(globalNodes[i].count==0&&globalNodes[i].colour=="Red")System.out.println("LCA = "+globalNodes[i].name);
+			//System.out.println(globalNodes[i].toString()+": "+globalNodes[i].colour);
+			if(globalNodes[i].count==0&&globalNodes[i].colour=="Red")
+			{
+				System.out.println("LCA = "+globalNodes[i].name);
+				ret.add(globalNodes[i]);
+			}
 		}
-		return globalNodes[1];
+		return ret;
 	}
 
 	public void blue(Node n)
 	{
+		n.colour="Blue";
 		for(Edge x : n.inEdges)
 		{
 			x.from.colour="Blue";
@@ -97,6 +123,7 @@ class DAG
 
 	public void red(Node n)
 	{
+		if(n.colour=="Blue")n.colour="Red";
 		for(Edge x : n.inEdges)
 		{
 			if(x.from.colour=="Blue")
@@ -118,14 +145,13 @@ class DAG
 		two.addEdge(three).addEdge(five);
 		three.addEdge(four);
 
-		Node[] allNodes = {one, two, three, four, five};
+		Node[] allNodes = {zero, one, two, three, four, five};
 		globalNodes = allNodes;
 
-		HashSet<Node> S = new HashSet<Node>(); 
+		
 		for(Node n : allNodes){
 			if(n.inEdges.size() == 0){
 				S.add(n);
-				root=n;
 			}
 		}
 	}
