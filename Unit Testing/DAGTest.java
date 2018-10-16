@@ -53,12 +53,28 @@ public class DAGTest
 				tree.get(tree.root, 18)), tree.get(tree.root, 68)).key);
 	}
 	
+	/*	DAG used for Unit testing appears as such:
+	 * 
+	 * 			 2 --- 3 --- 4	
+	 * 			/ \_  ______/
+	 * 		   0   _\/
+	 * 			\ /  \_	
+	 * 			 1 --- 5
+	 * 
+	 * -------------TIME--------------->
+	 */
+	
+	
 	@Test
 	public void testDAG()
 	{
 		DAG d = new DAG();
 		d.createGraph();
-		d.LCA("4","5");
+		
+		assertEquals("Testing for 2 Nodes with single LCA (3,5 = 2)", "[2]", d.LCA("3", "5").toString());
+		assertEquals("Testing for 2 Nodes with multiple LCAs (4,5 = 1,2)", "[1, 2]", d.LCA("4", "5").toString());
+		assertEquals("Testing for 1 Nodes with itself (5,5 = 5)", "[5]", d.LCA("5", "5").toString());
+		assertEquals("Testing for 2 Nodes, one of which is the root (0,5 = 0)", "[0]", d.LCA("0", "5").toString());
 
 	}
 	

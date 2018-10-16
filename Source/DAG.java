@@ -67,6 +67,14 @@ class DAG
 			if(globalNodes[i].name==Y){
 				m=globalNodes[i];
 			}
+			globalNodes[i].colour="White";
+			globalNodes[i].count=0;
+
+		}
+		if(n.equals(m))
+		{
+			ret.add(n);
+			return ret;
 		}
 		if(!n.inEdges.isEmpty())
 			for( Edge x : n.inEdges)
@@ -101,10 +109,9 @@ class DAG
 		}
 		for(int i=0;i<globalNodes.length;i++)
 		{
-			//System.out.println(globalNodes[i].toString()+": "+globalNodes[i].colour);
+			//System.out.println(globalNodes[i].toString()+": "+globalNodes[i].colour+globalNodes[i].count);
 			if(globalNodes[i].count==0&&globalNodes[i].colour=="Red")
 			{
-				System.out.println("LCA = "+globalNodes[i].name);
 				ret.add(globalNodes[i]);
 			}
 		}
