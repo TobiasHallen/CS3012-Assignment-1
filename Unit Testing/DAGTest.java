@@ -23,34 +23,28 @@ public class DAGTest
 	@Test
 	public void testBST() 
 	{
-		BinaryTree tree = new BinaryTree(); 
-        tree.root = tree.insert(tree.root, 45); 
-        tree.root = tree.insert(tree.root, 27); 
-        tree.root = tree.insert(tree.root, 68); 
-        tree.root = tree.insert(tree.root, 18); 
-        tree.root = tree.insert(tree.root, 35); 
-        tree.root = tree.insert(tree.root, 29); 
-        tree.root = tree.insert(tree.root, 39);
+		DAG d = new DAG();
+		d.createBSTGraph();
         
         //Tests for Two Nodes where Result is expected to be a third, Separate Node
-		assertEquals("Testing for 39 and 18", 27, tree.LCA(tree.get(tree.root, 39), tree.get(tree.root, 18)).key);
-		assertEquals("Testing for 29 and 18", 27, tree.LCA(tree.get(tree.root, 29), tree.get(tree.root, 18)).key);
-		assertEquals("Testing for 29 and 39", 35, tree.LCA(tree.get(tree.root, 29), tree.get(tree.root, 39)).key);
+		assertEquals("Testing for 39 and 18", "[27]", d.LCA("39", "18").toString());
+		assertEquals("Testing for 29 and 18", "[27]", d.LCA("29", "18").toString());
+		assertEquals("Testing for 29 and 39", "[35]", d.LCA("29", "39").toString());
 
 		//Tests for Nodes a and b where a|b==result
-		assertEquals("Testing for 39 and 35", 35, tree.LCA(tree.get(tree.root, 39), tree.get(tree.root, 35)).key);
-		assertEquals("Testing for 39 and 27", 27, tree.LCA(tree.get(tree.root, 39), tree.get(tree.root, 27)).key);
+		assertEquals("Testing for 39 and 35", "[35]", d.LCA("39", "35").toString());
+		assertEquals("Testing for 39 and 27", "[27]", d.LCA("39", "27").toString());
 		
 		//tests for Nodes a and b where a==b==result
-		assertEquals("Testing for 27 and 27", 27, tree.LCA(tree.get(tree.root, 27), tree.get(tree.root, 27)).key);
-		assertEquals("Testing for 45 and 45", 45, tree.LCA(tree.get(tree.root, 45), tree.get(tree.root, 45)).key);
+		assertEquals("Testing for 27 and 27", "[27]", d.LCA("27", "27").toString());
+		assertEquals("Testing for 45 and 45", "[45]", d.LCA("45", "45").toString());
 		
 		//test for null input (output is null)
-		assertEquals("Testing for null input", null, tree.LCA(null, null));
+		assertEquals("Testing for null input", "[]", d.LCA(null, null).toString());
 		
 		//test recursive ability of LCA function, to find LCA of 3 or more Nodes
-		assertEquals("Testing for >2 Nodes, i.e. 39, 18 and 69", 45, tree.LCA(tree.LCA(tree.get(tree.root, 39), 
-				tree.get(tree.root, 18)), tree.get(tree.root, 68)).key);
+		assertEquals("Testing for >2 Nodes, i.e. 39, 18 and 68", "[45]", d.LCA(d.LCA("39", 
+				"18").get(0).toString(), "68").toString());
 	}
 	
 	/*	DAG used for Unit testing appears as such:

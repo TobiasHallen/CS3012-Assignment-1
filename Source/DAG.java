@@ -159,6 +159,29 @@ class DAG
 		}
 	}
 
+	public void createBSTGraph()
+	{
+		Node fourtyfive = new Node("45");
+		Node twentyseven = new Node("27");
+		Node sixtyeight = new Node("68");
+		Node eighteen = new Node("18");
+		Node thirtyfive = new Node("35");
+		Node twentynine = new Node("29");
+		Node thirtynine = new Node("39");
+		fourtyfive.addEdge(twentyseven).addEdge(sixtyeight);
+		twentyseven.addEdge(eighteen).addEdge(thirtyfive);
+		thirtyfive.addEdge(twentynine).addEdge(thirtynine);
+
+		Node[] allNodes = {fourtyfive, twentyseven, sixtyeight, eighteen, thirtyfive, twentynine, thirtynine};
+		globalNodes = allNodes;
+
+		
+		for(Node n : allNodes){
+			if(n.inEdges.size() == 0){
+				S.add(n);
+			}
+		}
+	}
 } 
 
 class BSTNode  
